@@ -3,9 +3,7 @@
 
 
 
-const PortfolioCard = ({portfolio}) => {
-  console.log('portfolio', portfolio);
-  
+const PortfolioCard = ({portfolio}) => {  
   return (
     <div className="card subtle-shadow no-border">
       <div className="card-body">
