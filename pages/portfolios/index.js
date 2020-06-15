@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery, useLazyQuery , useMutation} from '@apollo/react-hooks';
+import  { GET_PORTFOLIOS,  CREATE_PORTFOLIO} from '@/apollo/queries';
 
 import axios from 'axios'
 import Link from 'next/link'
@@ -45,59 +47,22 @@ const graphUpdatePortfolio = (_id) => {
     .then(data => data.updatePortfolio)
 }
 
-const graphCreatePortfolio = () => {
-  const query = `
-    mutation CreatePortfolio {
-      createPortfolio(input: {
-        title: "New Job"
-        company: "New Company"
-        companyWebsite: "New Website"
-        location: "New Location"
-        jobTitle: "New Job Title"
-        description: "New Desc"
-        startDate: "12/12/2012"
-        endDate: "14/11/2013"
-      }) {
-        _id,
-        title,
-        company,
-        companyWebsite
-        location
-        description
-        startDate
-        endDate
-      }
-    }`;
-  return axios.post('http://localhost:3000/graphql', { query })
-    .then(({data: graph}) => graph.data)
-    .then(data => data.createPortfolio)
-}
 
-const fetchData = () => {
-  const query = `query Portfolios { 
-    portfolios { 
-      _id
-      title
-      location
-      startDate
-      endDate
-      company
-      companyWebsite
-      description}
-    }`
+const Portfolios = () => {
+  const [portfolios, setPortfolios] = useState([]);
+  const [getPortfolios,{loading,data}] = useLazyQuery(GET_PORTFOLIOS);
+  const [createPortfolio, {data:dataC}] = useMutation(CREATE_PORTFOLIO)
 
-    return axios.post('http://localhost:3000/graphql',{query})
-    .then(({data:graph}) => graph.data)
-    .then(data => data.portfolios)
-}
-const Portfolios = ({data}) => {
-  const [portfolios, setPortfolios] = useState(data.portfolios);
+  useEffect(()=>{
+    getPortfolios();
+  },[])
 
-  const createPortfolio = async () => {
-    const newPortfolio = await graphCreatePortfolio();
-    const newPortfolios = [...portfolios, newPortfolio];
-    setPortfolios(newPortfolios);
+  if(data && data.portfolios.length > 0 && portfolios.length === 0){
+    setPortfolios(data.portfolios);
   }
+
+  if(loading){return 'Loading...'}
+
   const updatePortfolio = async  (id) => {
     const update = await graphUpdatePortfolio(id);
     const index = portfolios.findIndex(p => p._id === id);
@@ -152,11 +117,6 @@ const Portfolios = ({data}) => {
       </section>
     </>
   )
-}
-
-Portfolios.getInitialProps = async () =>{
-  const portfolios = await fetchData();
-  return { data: { portfolios }};
 }
 
 export default Portfolios;
