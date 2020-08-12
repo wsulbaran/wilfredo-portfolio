@@ -9,9 +9,10 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 const Portfolio = require('./graphql/models/Portfolio');
+const User = require('./graphql/models/User');
 
 //resolvers data
-const {portfoliosQueries,portfoliosMutation} = require('./graphql/resolvers/index');
+const {portfoliosQueries,portfoliosMutation, userMutation} = require('./graphql/resolvers/index');
 //type resolvers
 const {portfoliosTypes} = require('./graphql/types/index');
 //conect to db
@@ -33,6 +34,10 @@ app.prepare().then(() => {
       createPortfolio(input: PortfolioInput): Portfolio
       updatePortfolio(id: ID, input: PortfolioInput): Portfolio
       deletePortfolio(id:ID): ID
+
+      signIn: String
+      signUp: String
+      signOut: String
     }
   `;
   // the root provides a resolver for each API ENDPOINTS
@@ -41,7 +46,8 @@ app.prepare().then(() => {
       ...portfoliosQueries
     },
     Mutation:{
-      ...portfoliosMutation
+      ...portfoliosMutation,
+      ...userMutation
     }
   };
 
@@ -50,7 +56,8 @@ app.prepare().then(() => {
     resolvers,
     context:()=>({
       models: {
-        Portfolio: new Portfolio(mongoose.model('Portfolio'))
+        Portfolio: new Portfolio(mongoose.model('Portfolio')),
+        User: new User(),
       }
     })
   });

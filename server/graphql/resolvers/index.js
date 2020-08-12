@@ -16,8 +16,8 @@ exports.portfoliosQueries = {
 }
 
 exports.portfoliosMutation = {
-  createPortfolio: async (root,{input}) => {
-    const portfolioCreate = await Portfolio.create(input)
+  createPortfolio: async (root,{input}, ctx) => {
+    const portfolioCreate = await ctx.model.Portfolio.create(input)
     return portfolioCreate;
   },
   updatePortfolio: async (root,{id,input},ctx) => {
@@ -29,3 +29,15 @@ exports.portfoliosMutation = {
     return deletedPortfolio._id;
   }
 }
+
+exports.userMutation = {
+  signIn: async (root,args,ctx) => {
+    return ctx.models.User.signIn();
+  },
+  signUp: (root,args,ctx)=>{
+    return ctx.models.User.signUp();
+  },
+  signOut: (root,args,ctx)=> {
+    return ctx.models.User.signIn();
+  }
+} 
