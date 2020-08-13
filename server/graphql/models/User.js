@@ -1,13 +1,17 @@
 class User {
-    /*constructor (model){
+    constructor (model){
         this.Model = model
-    }*/
+    }
 
+    signUp(signUpData) {
+        console.log('signUpData', signUpData);
+        if (signUpData.password !== signUpData.passwordConfirmation) {
+            throw new Error('Password must be the same as confirmation password!');
+        }
+        return this.Model.create(signUpData);
+    }
     signIn() {
         return 'Signing In...';
-    }
-    signUp() {
-        return 'Signing Up...';
     }
     signOut() {
         return 'Signing Out...';

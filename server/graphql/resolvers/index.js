@@ -31,11 +31,12 @@ exports.portfoliosMutation = {
 }
 
 exports.userMutation = {
+  signUp: async (root,{input},ctx)=>{
+    const userRegister = await ctx.models.User.signUp(input)
+    return userRegister._id ;
+  },
   signIn: async (root,args,ctx) => {
     return ctx.models.User.signIn();
-  },
-  signUp: (root,args,ctx)=>{
-    return ctx.models.User.signUp();
   },
   signOut: (root,args,ctx)=> {
     return ctx.models.User.signIn();

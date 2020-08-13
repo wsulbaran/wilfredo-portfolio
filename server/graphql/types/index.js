@@ -22,3 +22,14 @@ exports.portfoliosTypes = `
     ${portfolioFields}
   }
 `
+
+exports.userType = `
+  input SignUpInput {
+    avatar: String
+    name: String
+    username: String!
+    email: String!
+    password: String!
+    passwordConfirmation: String
+  }
+`

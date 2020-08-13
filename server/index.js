@@ -14,7 +14,7 @@ const User = require('./graphql/models/User');
 //resolvers data
 const {portfoliosQueries,portfoliosMutation, userMutation} = require('./graphql/resolvers/index');
 //type resolvers
-const {portfoliosTypes} = require('./graphql/types/index');
+const {portfoliosTypes, userType} = require('./graphql/types/index');
 //conect to db
 require('./database/index').connect();
 app.prepare().then(() => {
@@ -24,7 +24,8 @@ app.prepare().then(() => {
   const  typeDefs = gql`
 
     ${portfoliosTypes}
-
+    ${userType}
+    
     type Query {
       portfolio(id:ID):Portfolio
       portfolios:[Portfolio]
@@ -34,9 +35,9 @@ app.prepare().then(() => {
       createPortfolio(input: PortfolioInput): Portfolio
       updatePortfolio(id: ID, input: PortfolioInput): Portfolio
       deletePortfolio(id:ID): ID
-
+      
+      signUp(input: SignUpInput): String
       signIn: String
-      signUp: String
       signOut: String
     }
   `;
@@ -57,7 +58,7 @@ app.prepare().then(() => {
     context:()=>({
       models: {
         Portfolio: new Portfolio(mongoose.model('Portfolio')),
-        User: new User(),
+        User: new User(mongoose.model('User')),
       }
     })
   });
