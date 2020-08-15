@@ -2,6 +2,7 @@
 
 
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
@@ -39,4 +40,15 @@ const userSchema = new schema({
   createdAt: { type: Date, default: Date.now }
 })
 
+userSchema.pre("save", function (next) {
+  const user = this;
+  bcrypt.genSalt(10, function(err, salt) {
+    if (err) { return next(err) }
+    bcrypt.hash(user.password, salt, function(err, hash) {
+      if (err) { return next(err)}
+      user.password = hash;
+      next();
+    });
+  });
+})
 module.exports = mongoose.model('User', userSchema);

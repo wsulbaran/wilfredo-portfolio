@@ -13,6 +13,7 @@ title: { type: String, required: true, maxlength: 128 },
   description: { type: String, required: true },
   startDate: { type: Date, required: true },
   endDate: Date,
+  user:{ type: schema.Types.ObjectId, ref:"User"},
   createdAt: { type: Date, default: Date.now }
 })
 
