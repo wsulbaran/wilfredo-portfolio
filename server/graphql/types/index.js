@@ -1,5 +1,3 @@
-
-
 const portfolioFields = `
   title: String,
   company: String,
@@ -12,18 +10,17 @@ const portfolioFields = `
 `
 
 
-exports.portfoliosTypes = `
+exports.portfolioTypes = `
   type Portfolio {
     _id: ID,
     ${portfolioFields}
   }
-
   input PortfolioInput {
     ${portfolioFields}
   }
 `
 
-exports.userType = `
+exports.userTypes = `
   input SignUpInput {
     avatar: String
     name: String
@@ -31,5 +28,9 @@ exports.userType = `
     email: String!
     password: String!
     passwordConfirmation: String
+  }
+  input SignInInput {
+    email: String!
+    password: String!
   }
 `
