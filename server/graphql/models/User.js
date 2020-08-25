@@ -1,27 +1,26 @@
 class User {
-    constructor (model){
-        this.Model = model
-    }
+	constructor (model){
+		this.Model = model
+	}
 
-    signUp(signUpData) {
-        console.log('signUpData', signUpData);
-        if (signUpData.password !== signUpData.passwordConfirmation) {
-            throw new Error('Password must be the same as confirmation password!');
-        }
-        return this.Model.create(signUpData);
-    }
-    signIn(signInData, ctx) {
-        const isAuthenticated = ctx.authenticate(signInData);
-    
-        if (isAuthenticated) {
-          console.log('User is Authenticated!');
-        }
-    
-        return `Sign In Output!`;
-    }  
-    signOut() {
-        return 'Signing Out...';
-    }
+	signUp(signUpData) {
+		console.log('signUpData', signUpData);
+		if (signUpData.password !== signUpData.passwordConfirmation) {
+			throw new Error('Password must be the same as confirmation password!');
+		}
+		return this.Model.create(signUpData);
+	}
+	async signIn(signInData, ctx) {
+		try {
+			const user = await ctx.authenticate(signInData);
+			return user;
+		} catch (error) {
+			return error;
+		}
+	}  
+	signOut() {
+		return 'Signing Out...';
+	}
 
 }
 

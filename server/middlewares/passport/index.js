@@ -1,34 +1,19 @@
-const { Strategy } = require("passport-strategy");
 
 
 
 
-// Strategy get options(email, password) needed to authenticate user
-// Strategy gets a callback function that will contain functionality to verify an user
-// Strategy has to have "authenticate" function
-// Strategy has access to "error" "fail" "success" functions
-class GraphqlStrategy extends Strategy {
-	constructor (verify) {
-		super();
+const GraphqlStrategy = require('./strategies');
+const passport = require('passport');
 
-		if(!verify){
-			throw new Error('Graphql strategy requires a verify callback')
+exports.init = (passport) => {
+	passport.use('graphql', new GraphqlStrategy((options, done) => {
+		console.log('calling verify function of strategy');
+		//1. find user in db and if user exists verify user password
+		//if user is verified call done
+
+		if (true){
+			// first params of done is reserved for "error", second one for "user"
+			done();
 		}
-
-		this.verify = verify;
-		this.name = 'graphql';
-	}
-
-	authenticate (_, options) {
-		console.log('Calling authenticate in strategy');
-		// in done we will receive "error", "user", "info"
-		const done = () => {
-			console.log('Calling in authenticate callback');
-			// if user then call "success" otherwise call "fail" or "error"
-		}
-
-		this.verify(options,done)
-	}
+	}));
 }
-
-module.exports = GraphqlStrategy;
