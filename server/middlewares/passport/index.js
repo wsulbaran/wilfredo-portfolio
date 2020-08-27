@@ -12,6 +12,12 @@ exports.init = (passport) => {
 		done(null, user.id)
 	})
 
+	passport.deserializeUser((id, done) => {
+		User.findById(id, (error, user) => {
+		  done(error, user);
+		})
+	  })
+	  
 	passport.use('graphql', new GraphqlStrategy(({email, password}, done) => {
 		console.log('email', email);
 		User.findOne({email}, (error, user) => {
