@@ -15,4 +15,5 @@ exports.init = (server,db) => {
 		store: db.initSessionStore()
 	}
 	server.use(session(sess))
+	server.use(passport.initialize())
 }

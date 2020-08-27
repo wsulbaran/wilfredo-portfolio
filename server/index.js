@@ -42,7 +42,7 @@ app.prepare().then(() => {
       
       signUp(input: SignUpInput): String
       signIn(input: SignInInput): User
-      signOut: String
+      signOut: Boolean
     }
   `;
   // the root provides a resolver for each API ENDPOINTS
@@ -59,8 +59,8 @@ app.prepare().then(() => {
   const apolloServer = new ApolloServer({
     typeDefs, 
     resolvers,
-    context:()=>({
-      ...buildAuthContext(),
+    context:({req})=>({
+      ...buildAuthContext(req),
       models: {
         Portfolio: new Portfolio(mongoose.model('Portfolio')),
         User: new User(mongoose.model('User')),

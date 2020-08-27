@@ -2,7 +2,7 @@ const passport = require('passport')
 
 
 // options ==> {email, password}
-const authenticateUser = (options) => {
+const authenticateUser = (req, options) => {
 	console.log('Calling authenticateUser');
 
 	return new Promise((resolve, reject)=>{
@@ -13,7 +13,11 @@ const authenticateUser = (options) => {
 			}
 			// if we will get user we can save session to DB
 			if (user){
-				return resolve(user)
+				req.login(user, (error)=>{
+					if (error) { reject(new Error(error))}
+					return resolve(user)
+				})
+				
 			} else {
 				return reject(new Error(' Invalid password or email'))
 			}
@@ -25,9 +29,10 @@ const authenticateUser = (options) => {
   
   
   
-exports.buildAuthContext = () => {
+exports.buildAuthContext = (req) => {
 	const auth = {
-		authenticate: (options) => authenticateUser(options)
+		authenticate: (options) => authenticateUser(req, options),
+		logout: () => req.logout()
 	}
 	return auth;
 }  
