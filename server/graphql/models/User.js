@@ -3,12 +3,27 @@ class User {
 		this.Model = model
 	}
 
+	getAuthUser(ctx) {
+    if (ctx.isAuthenticated()) {
+      return ctx.getUser();
+    }
+
+    return null;
+	}
+
 	signUp(signUpData) {
-		console.log('signUpData', signUpData);
 		if (signUpData.password !== signUpData.passwordConfirmation) {
 			throw new Error('Password must be the same as confirmation password!');
 		}
-		return this.Model.create(signUpData);
+		try {
+			return this.Model.create(signUpData);
+		} catch (error) {
+			if (error.code && error.code === 11000) {
+				throw new Error('User with provided email already exists!');
+			}
+			console.log('error ', error);
+			throw error;
+		}
 	}
 	async signIn(signInData, ctx) {
 		try {

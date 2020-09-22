@@ -13,7 +13,7 @@ const User = require('./graphql/models/User');
 const { buildAuthContext } = require('./graphql/context');
 
 //resolvers data
-const {portfoliosQueries,portfoliosMutation, userMutation} = require('./graphql/resolvers/index');
+const {portfoliosQueries,portfoliosMutation, userMutation, userQueries} = require('./graphql/resolvers/index');
 //type resolvers
 const {portfolioTypes, userTypes} = require('./graphql/types/index');
 //conect to db
@@ -33,6 +33,8 @@ app.prepare().then(() => {
     type Query {
       portfolio(id:ID):Portfolio
       portfolios:[Portfolio]
+  
+      user: User
     }
 
     type Mutation {
@@ -48,7 +50,8 @@ app.prepare().then(() => {
   // the root provides a resolver for each API ENDPOINTS
   const resolvers = {
     Query:{
-      ...portfoliosQueries
+      ...portfoliosQueries,
+      ...userQueries
     },
     Mutation:{
       ...portfoliosMutation,

@@ -6,6 +6,9 @@ import Redirect from '@/components/shared/Redirect';
 
 
 const Register = () => {
+  const errorMessages = (error) => {
+    return error.graphQLErrors && error.graphQLErrors[0].message || 'Oooops something went wrong...'
+  }
   return (
     <>
       <div className="bwm-form m-5">
@@ -17,9 +20,10 @@ const Register = () => {
 
                 <>
                   <RegisterForm onSubmit={registerData => {
-                    signUpUser({variables: registerData})
+                    signUpUser({variables: registerData}).catch(e => e);
                   }} />
                   { data && data.signUp && <Redirect to="/login"/>}
+                  { error && error.graphQLErrors[0].message && <div className="alert alert-danger">{errorMessages(error)}</div>}
                 </>
               }
             </Mutation>

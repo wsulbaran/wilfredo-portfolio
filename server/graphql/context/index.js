@@ -13,7 +13,7 @@ const authenticateUser = (req, options) => {
 			}
 			// if we will get user we can save session to DB
 			if (user){
-				if(req.isAuthenticated()){return reject(new Error('User is authenticated'))}
+				if(req.isAuthenticated()){return reject(new Error('User is  authenticated'))}
 				req.login(user, (error)=>{
 					if (error) { reject(new Error(error))}
 					return resolve(user)
