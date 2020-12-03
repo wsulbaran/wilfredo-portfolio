@@ -9,7 +9,7 @@ import Hero from '@/components/shared/Hero';
 
 
 const MyApp = ({Component, pageProps}) => {
-
+  console.log(Component);
   const homePage = () => Component.name === "Home";
   return (
     <div className="portfolio-app">
@@ -18,7 +18,7 @@ const MyApp = ({Component, pageProps}) => {
       <div className="container">
         <Component {...pageProps}/>
       </div>
-      
+
         {/* FOOTER STARTS */}
         { homePage() &&
           <footer id="sticky-footer" className="py-4 bg-black text-white-50 py-3">
@@ -27,7 +27,7 @@ const MyApp = ({Component, pageProps}) => {
             </div>
           </footer>
         }
-        {/* FOOTER ENDS */}  
+        {/* FOOTER ENDS */}
     </div>
   )
 }

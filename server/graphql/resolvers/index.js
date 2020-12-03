@@ -17,7 +17,7 @@ exports.portfoliosQueries = {
 
 exports.portfoliosMutation = {
   createPortfolio: async (root,{input}, ctx) => {
-    const portfolioCreate = await ctx.model.Portfolio.create(input)
+    const portfolioCreate = await ctx.models.Portfolio.create(input)
     return portfolioCreate;
   },
   updatePortfolio: async (root,{id,input},ctx) => {
@@ -47,4 +47,4 @@ exports.userMutation = {
   signOut: (root,args,ctx)=> {
     return ctx.models.User.signOut(ctx);
   }
-} 
+}
