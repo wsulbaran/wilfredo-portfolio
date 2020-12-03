@@ -9,7 +9,6 @@ import Hero from '@/components/shared/Hero';
 
 
 const MyApp = ({Component, pageProps}) => {
-  console.log(Component);
   const homePage = () => Component.name === "Home";
   return (
     <div className="portfolio-app">
