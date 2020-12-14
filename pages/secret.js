@@ -14,7 +14,7 @@ const Secret = withAuth(({displayMessage}) => {
       </div>
     </>
   )
-})
+},'guest')
 
 
 
