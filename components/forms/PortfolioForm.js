@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import {useEffect, useState} from  'react'
+
 const PortfolioForm = ({onSubmit}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndtDate] = useState(null);
@@ -30,13 +31,23 @@ const PortfolioForm = ({onSubmit}) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="city">Company</label>
+        <label htmlFor="company">Company</label>
         <input
           ref={register}
           name="company"
           type="text"
           className="form-control"
           id="company"/>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="city">Company Website</label>
+        <input
+          ref={register}
+          name="companyWebsite"
+          type="text"
+          className="form-control"
+          id="companyWebsite"/>
       </div>
 
       <div className="form-group">
