@@ -29,11 +29,11 @@ app.prepare().then(() => {
 
     ${portfolioTypes}
     ${userTypes}
-    
+
     type Query {
       portfolio(id:ID):Portfolio
       portfolios:[Portfolio]
-  
+
       user: User
     }
 
@@ -41,7 +41,7 @@ app.prepare().then(() => {
       createPortfolio(input: PortfolioInput): Portfolio
       updatePortfolio(id: ID, input: PortfolioInput): Portfolio
       deletePortfolio(id:ID): ID
-      
+
       signUp(input: SignUpInput): String
       signIn(input: SignInInput): User
       signOut: Boolean
@@ -60,19 +60,19 @@ app.prepare().then(() => {
   };
 
   const apolloServer = new ApolloServer({
-    typeDefs, 
+    typeDefs,
     resolvers,
     context:({req})=>({
       ...buildAuthContext(req),
       models: {
-        Portfolio: new Portfolio(mongoose.model('Portfolio')),
+        Portfolio: new Portfolio(mongoose.model('Portfolio'), req.user),
         User: new User(mongoose.model('User')),
       }
     })
   });
 
   apolloServer.applyMiddleware({app:server})
-  
+
   server.all('*', (req, res) => {
     return handle(req, res)
   })
