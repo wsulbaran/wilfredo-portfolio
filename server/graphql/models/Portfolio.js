@@ -34,6 +34,10 @@ class Portfolio {
     findAndDelete(id) {
       return this.Model.findOneAndRemove({_id: id})
     }
+
+    getAllUserPortfolios () {
+      return this.Model.find({user: this.user._id}).sort({startDate:'desc'});
+    }
   }
 
   module.exports = Portfolio;

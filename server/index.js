@@ -31,9 +31,9 @@ app.prepare().then(() => {
     ${userTypes}
 
     type Query {
-      portfolio(id:ID):Portfolio
-      portfolios:[Portfolio]
-
+      portfolio(id:ID): Portfolio
+      portfolios: [Portfolio]
+      userPortfolios: [Portfolio]
       user: User
     }
 

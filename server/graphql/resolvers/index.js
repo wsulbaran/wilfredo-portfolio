@@ -12,6 +12,9 @@ exports.portfoliosQueries = {
   },
   portfolios: async (root, args, ctx) => {
     return ctx.models.Portfolio.getAll();
+  },
+  userPortfolios: async (root, args, ctx) => {
+    return ctx.models.Portfolio.getAllUserPortfolios();
   }
 }
 
