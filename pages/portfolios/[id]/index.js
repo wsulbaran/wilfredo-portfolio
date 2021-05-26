@@ -1,16 +1,11 @@
+import  { useGetPortfolio } from '@/apollo/actions';
 
-import { useQuery } from '@apollo/react-hooks';
-import  { GET_PORTFOLIO } from '@/apollo/queries';
 import withApollo from '@/hoc/withApollo';
 import { getDataFromTree } from '@apollo/react-ssr';
 import BaseLayout from '@/layouts/BaseLayout';
 
 const portFoliosDetails = ({query})  =>{
-  const {data,loading, error} = useQuery(GET_PORTFOLIO,{
-    variables:{
-      id:query.id
-    }
-  })
+  const { data } = useGetPortfolio({variables: {id: query.id}});
 
   const portfolio = data && data.portfolio || {};
 
