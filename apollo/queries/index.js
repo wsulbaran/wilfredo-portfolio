@@ -18,8 +18,8 @@ export const GET_PORTFOLIO = gql`
   }
 `
 
-export const GET_PORTFOLIOS = gql`query Portfolios { 
-  portfolios { 
+export const GET_PORTFOLIOS = gql`query Portfolios {
+  portfolios {
     _id
     title
     location
@@ -30,17 +30,38 @@ export const GET_PORTFOLIOS = gql`query Portfolios {
     description}
   }`
 
+  export const GET_USER_PORTFOLIOS = gql`
+  query UserPortfolios {
+    userPortfolios {
+      _id
+      title
+      jobTitle
+      startDate
+      endDate
+    }
+  }
+`;
+
 export const CREATE_PORTFOLIO = gql`
-  mutation CreatePortfolio {
+  mutation CreatePortfolio (
+    $title: String
+    $company: String
+    $companyWebsite: String
+    $location: String
+    $jobTitle: String
+    $description: String
+    $startDate: String
+    $endDate: String
+  ) {
     createPortfolio(input: {
-      title: "New Job"
-      company: "New Company"
-      companyWebsite: "New Website"
-      location: "New Location"
-      jobTitle: "New Job Title"
-      description: "New Desc"
-      startDate: "2012-12-12T23:59Z"
-      endDate: "2012-11-15T23:59Z"
+      title: $title
+      company: $company
+      companyWebsite: $companyWebsite
+      location: $location
+      jobTitle: $jobTitle
+      description: $description
+      startDate: $startDate
+      endDate: $endDate
     }) {
       _id,
       title,
@@ -117,6 +138,7 @@ export const SIGN_IN = gql`
     }
   }
 `
+export const SIGN_OUT = gql`mutation SignOut { signOut }`
 export const GET_USER =gql`
   query User {
     user {

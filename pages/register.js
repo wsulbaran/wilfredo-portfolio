@@ -3,6 +3,7 @@ import { Mutation } from 'react-apollo';
 import { SIGN_UP } from '@/apollo/queries';
 import withApollo from '@/hoc/withApollo';
 import Redirect from '@/components/shared/Redirect';
+import BaseLayout from '@/layouts/BaseLayout';
 
 
 const Register = () => {
@@ -10,7 +11,7 @@ const Register = () => {
     return error.graphQLErrors && error.graphQLErrors[0].message || 'Oooops something went wrong...'
   }
   return (
-    <>
+    <BaseLayout>
       <div className="bwm-form m-5">
         <div className="row">
           <div className="col-md-5 mx-auto">
@@ -30,7 +31,7 @@ const Register = () => {
           </div>
         </div>
       </div>
-    </>
+    </BaseLayout>
   )
 }
 

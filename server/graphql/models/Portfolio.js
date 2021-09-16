@@ -4,9 +4,11 @@
 
 class Portfolio {
 
-    constructor(model) {
+    constructor(model, user) {
       // this.Model === Portfolio
       this.Model = model;
+      this.user = user;
+      this.roles = ['admin', 'instructor']
     }
 
     getAll() {
@@ -18,6 +20,10 @@ class Portfolio {
     }
 
     create(data) {
+      if(!this.user || !this.roles.includes(this.user.role)){
+        throw Error('Not Authorize!!!')
+      }
+      data.user = this.user;
       return this.Model.create(data);
     }
 
@@ -27,6 +33,10 @@ class Portfolio {
 
     findAndDelete(id) {
       return this.Model.findOneAndRemove({_id: id})
+    }
+
+    getAllUserPortfolios () {
+      return this.Model.find({user: this.user._id}).sort({startDate:'desc'});
     }
   }
 

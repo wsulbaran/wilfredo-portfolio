@@ -1,10 +1,11 @@
 import React from 'react';
+import BaseLayout from '@/layouts/BaseLayout';
 
 
 class ForumCategories extends React.Component {
   render () {
     return (
-      <>
+      <BaseLayout>
         <section className="section-title">
           <div className="px-2">
             <div className="pt-5 pb-4">
@@ -73,7 +74,7 @@ class ForumCategories extends React.Component {
             </div>
           </div>
         </section>
-      </>
+      </BaseLayout>
     )
   }
 }
